@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bh5k4hxf3pdv2"]
+
+[ext_resource type="Script" path="res://main/main.gd" id="1_5ndtr"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_5ndtr")
+
+[node name="Button" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "AAA"

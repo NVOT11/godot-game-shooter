@@ -1,0 +1,8 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://cr1d2cqearcm1"]
+
+[ext_resource type="FontFile" uid="uid://l10iq6rwqpbd" path="res://contents/font/LINESeedJP_A_OTF_Rg.otf" id="1_qkitt"]
+
+[resource]
+line_spacing = -10.0
+font = ExtResource("1_qkitt")
+font_size = 20

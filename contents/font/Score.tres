@@ -1,0 +1,11 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://dgpgf5qi7yrum"]
+
+[ext_resource type="FontFile" uid="uid://l10iq6rwqpbd" path="res://contents/font/LINESeedJP_A_OTF_Rg.otf" id="1_d3wkk"]
+
+[resource]
+font = ExtResource("1_d3wkk")
+font_size = 40
+outline_size = 4
+outline_color = Color(0, 0, 0, 0.835294)
+shadow_size = 5
+shadow_offset = Vector2(3, 3)

@@ -1,0 +1,599 @@
+[gd_scene load_steps=35 format=3 uid="uid://dsg4x6m7y7ofp"]
+
+[ext_resource type="Script" path="res://scenes/main/main.gd" id="1_nb6b1"]
+[ext_resource type="Script" path="res://scenes/main/player.gd" id="2_kkcg0"]
+[ext_resource type="PackedScene" uid="uid://vykujaoorek4" path="res://contents/packed/bullet.tscn" id="4_bqr67"]
+[ext_resource type="AudioStream" uid="uid://d3oho3c8kmwt5" path="res://contents/audio/Shot.mp3" id="5_17sky"]
+[ext_resource type="Texture2D" uid="uid://ju7wj6v5i78j" path="res://contents/image/vi.png" id="7_4ut3b"]
+[ext_resource type="AudioStream" uid="uid://dwty430bilmo8" path="res://contents/audio/Damage.mp3" id="7_fc54a"]
+[ext_resource type="Script" path="res://scenes/main/spawner.gd" id="8_3avn8"]
+[ext_resource type="Texture2D" uid="uid://tdmoc4rwudp6" path="res://contents/image/circle512.png" id="8_kqiab"]
+[ext_resource type="AudioStream" uid="uid://dxgj1aip076kl" path="res://contents/audio/Normal.mp3" id="9_ok76t"]
+[ext_resource type="Texture2D" uid="uid://bhsfot53rins8" path="res://contents/image/background.png" id="11_cmsix"]
+[ext_resource type="Script" path="res://scenes/main/background.gd" id="11_txb0s"]
+[ext_resource type="PackedScene" uid="uid://boac0jb867ppi" path="res://contents/packed/enemy_lv1.tscn" id="13_qdvwm"]
+[ext_resource type="PackedScene" uid="uid://d1n8tkvkg5q1r" path="res://contents/packed/enemy_lv2.tscn" id="14_qd7pf"]
+[ext_resource type="PackedScene" uid="uid://cv8g7kesqxn6n" path="res://contents/packed/enemy_boss.tscn" id="15_yk8ux"]
+[ext_resource type="Texture2D" uid="uid://c7x5kjnrghe4e" path="res://contents/image/box512.png" id="16_3sfxg"]
+[ext_resource type="Script" path="res://scenes/main/hud.gd" id="16_wp0wc"]
+[ext_resource type="Script" path="res://scenes/title/swicher.gd" id="17_5uein"]
+[ext_resource type="Script" path="res://contents/joystick/virtual_joystick.gd" id="17_a3ck8"]
+[ext_resource type="Texture2D" uid="uid://bkvmydfn5saxg" path="res://contents/joystick/textures/joystick_tip.png" id="17_e8uq2"]
+[ext_resource type="LabelSettings" uid="uid://dgpgf5qi7yrum" path="res://contents/font/Score.tres" id="17_ooxbs"]
+[ext_resource type="Texture2D" uid="uid://bm30au8mjfc2f" path="res://contents/joystick/textures/joystick_base_outline.png" id="18_218n3"]
+[ext_resource type="Texture2D" uid="uid://dtjcp4tsjirp1" path="res://contents/image/switch-on.png" id="18_dbveo"]
+[ext_resource type="Texture2D" uid="uid://dt13r06u87fib" path="res://contents/joystick/textures/joystick_tip_arrows.png" id="19_dvhcm"]
+[ext_resource type="Texture2D" uid="uid://brqowfgye4cy" path="res://contents/image/hand.png" id="20_w0pmg"]
+[ext_resource type="Texture2D" uid="uid://bcpp7rxxeimw" path="res://contents/image/switch-off.png" id="21_fyxre"]
+[ext_resource type="LabelSettings" uid="uid://cr1d2cqearcm1" path="res://contents/font/Small.tres" id="21_tnr6x"]
+[ext_resource type="Texture2D" uid="uid://cas04puppac4h" path="res://contents/image/bat_icon.png" id="24_gbj01"]
+
+[sub_resource type="Animation" id="Animation_w23vf"]
+resource_name = "damage"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [51, 52, 53]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.7),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"return_to_idle"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.5, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 0.188235, 0.188235, 1), Color(1, 1, 1, 1), Color(1, 0.180392, 0.180392, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_rp06e"]
+resource_name = "fire"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [3, 4, 5]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"return_to_idle"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_0kb6m"]
+resource_name = "idle"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8, 1.2, 1.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 1, 0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ml6s2"]
+_data = {
+"damage": SubResource("Animation_w23vf"),
+"fire": SubResource("Animation_rp06e"),
+"idle": SubResource("Animation_0kb6m")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_j5r4h"]
+radius = 3.0
+height = 18.0
+
+[sub_resource type="Animation" id="Animation_wr6ft"]
+resource_name = "spawning"
+length = 60.0
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1.4, 5.2, 10.9, 15.9, 22.3, 28.6, 37.1, 42.8, 48.4, 48.8, 50.8, 54.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"values": [{
+"args": [0, 1],
+"method": &"spawn_enemies"
+}, {
+"args": [0, 2],
+"method": &"spawn_enemies"
+}, {
+"args": [0, 4],
+"method": &"spawn_enemies"
+}, {
+"args": [1, 1],
+"method": &"spawn_enemies"
+}, {
+"args": [0, 3],
+"method": &"spawn_enemies"
+}, {
+"args": [1, 3],
+"method": &"spawn_enemies"
+}, {
+"args": [0, 2],
+"method": &"spawn_enemies"
+}, {
+"args": [1, 3],
+"method": &"spawn_enemies"
+}, {
+"args": [0, 3],
+"method": &"spawn_enemies"
+}, {
+"args": [1, 2],
+"method": &"spawn_enemies"
+}, {
+"args": [],
+"method": &"spawn_boss"
+}, {
+"args": [0, 1],
+"method": &"spawn_enemies"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bshn2"]
+_data = {
+"spawning": SubResource("Animation_wr6ft")
+}
+
+[node name="Root" type="Node2D" node_paths=PackedStringArray("HUD", "Spawner", "Player", "Switcher", "VPad", "KeyHelp", "TitleButton", "RetryButton")]
+script = ExtResource("1_nb6b1")
+HUD = NodePath("UI")
+Spawner = NodePath("Spawner")
+Player = NodePath("Player")
+Switcher = NodePath("UI/Switch")
+VPad = NodePath("UI/VPad")
+KeyHelp = NodePath("UI/HUD/KeyHelp")
+TitleButton = NodePath("UI/ExitButton/TouchScreenButton")
+RetryButton = NodePath("UI/Result/ExitButton2/TouchScreenButton")
+
+[node name="Background" type="Node2D" parent="." node_paths=PackedStringArray("bg1", "bg2")]
+z_index = -10
+position = Vector2(640, 360)
+script = ExtResource("11_txb0s")
+bg1 = NodePath("Back1")
+bg2 = NodePath("Back2")
+
+[node name="Back1" type="Sprite2D" parent="Background"]
+self_modulate = Color(0.254902, 0.254902, 0.254902, 1)
+texture = ExtResource("11_cmsix")
+
+[node name="Back2" type="Sprite2D" parent="Background"]
+self_modulate = Color(0.254902, 0.254902, 0.254902, 1)
+position = Vector2(1280, 0)
+texture = ExtResource("11_cmsix")
+
+[node name="Player" type="CharacterBody2D" parent="." node_paths=PackedStringArray("Joystick", "FireButton")]
+z_index = 5
+position = Vector2(230, 300)
+scale = Vector2(10, 10)
+script = ExtResource("2_kkcg0")
+Joystick = NodePath("../UI/VPad/Joystick")
+FireButton = NodePath("../UI/VPad/Shot")
+bullet_tscn = ExtResource("4_bqr67")
+move_range = Vector2(1100, 720)
+sound_shot = ExtResource("5_17sky")
+sound_damage = ExtResource("7_fc54a")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+modulate = Color(1, 0.188235, 0.188235, 1)
+position = Vector2(-1, -1)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("7_4ut3b")
+flip_h = true
+hframes = 9
+vframes = 6
+frame = 51
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D2" type="Sprite2D" parent="Player/Sprite2D"]
+self_modulate = Color(0, 0, 0, 0.537255)
+z_index = -1
+position = Vector2(17.9988, 152.999)
+scale = Vector2(0.2, 0.1)
+texture = ExtResource("8_kqiab")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
+movie_quit_on_finish = true
+libraries = {
+"": SubResource("AnimationLibrary_ml6s2")
+}
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Player"]
+max_polyphony = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(0, 3)
+shape = SubResource("CapsuleShape2D_j5r4h")
+metadata/_edit_lock_ = true
+
+[node name="BGM" type="Node" parent="."]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="BGM"]
+stream = ExtResource("9_ok76t")
+autoplay = true
+
+[node name="Spawner" type="Node2D" parent="."]
+position = Vector2(1240, 350)
+script = ExtResource("8_3avn8")
+enemy_tscn_list = Array[PackedScene]([ExtResource("13_qdvwm"), ExtResource("14_qd7pf")])
+boss_tscn = ExtResource("15_yk8ux")
+spawn_range_max = 200.0
+spawn_range_min = -200.0
+
+[node name="(debug)" type="Sprite2D" parent="Spawner"]
+visible = false
+modulate = Color(1, 0, 0, 0.470588)
+scale = Vector2(0.1, 1)
+texture = ExtResource("16_3sfxg")
+metadata/_edit_lock_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Spawner"]
+libraries = {
+"": SubResource("AnimationLibrary_bshn2")
+}
+
+[node name="UI" type="Control" parent="." node_paths=PackedStringArray("LableTime", "LabelScore", "Result", "LabelResult", "EnergyBar")]
+z_index = 20
+clip_contents = true
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 1280.0
+offset_bottom = 720.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(640, 360)
+script = ExtResource("16_wp0wc")
+LableTime = NodePath("HUD/Time")
+LabelScore = NodePath("HUD/Score")
+Result = NodePath("Result")
+LabelResult = NodePath("Result/ResultScore")
+EnergyBar = NodePath("HUD/EnergyBar")
+metadata/_edit_lock_ = true
+
+[node name="HUD" type="Control" parent="UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Time" type="Label" parent="UI/HUD"]
+layout_mode = 1
+offset_left = 437.0
+offset_top = 20.0
+offset_right = 737.0
+offset_bottom = 120.0
+text = "Time: 00"
+label_settings = ExtResource("17_ooxbs")
+
+[node name="Score" type="Label" parent="UI/HUD"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -610.0
+offset_top = 20.0
+offset_right = -307.0
+offset_bottom = 120.0
+grow_horizontal = 0
+text = "Score: 00"
+label_settings = ExtResource("17_ooxbs")
+
+[node name="KeyHelp" type="Label" parent="UI/HUD"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 29.0
+offset_top = -100.0
+offset_right = 358.0
+offset_bottom = -32.0
+grow_vertical = 0
+text = "移動: ↑↓→←, WASD
+ショット: Z, Enter"
+label_settings = ExtResource("21_tnr6x")
+
+[node name="EnergyBar" type="ProgressBar" parent="UI/HUD"]
+self_modulate = Color(0, 1, 0.0156863, 1)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 400.0
+offset_top = -88.0
+offset_right = -380.0
+offset_bottom = -61.0
+grow_horizontal = 2
+grow_vertical = 0
+value = 30.0
+rounded = true
+show_percentage = false
+
+[node name="Result" type="Control" parent="UI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -100.0
+offset_right = 150.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="UI/Result"]
+self_modulate = Color(0, 0, 0, 0.698039)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("16_3sfxg")
+expand_mode = 1
+metadata/_edit_lock_ = true
+
+[node name="ResultScore" type="Label" parent="UI/Result"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -127.0
+offset_top = -34.5
+offset_right = 127.0
+offset_bottom = 34.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Score: 0000"
+label_settings = ExtResource("17_ooxbs")
+horizontal_alignment = 3
+
+[node name="ExitButton2" type="Control" parent="UI/Result"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 25.0
+offset_top = 15.0
+offset_right = -23.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="UI/Result/ExitButton2"]
+self_modulate = Color(0.462745, 0.462745, 0.462745, 0.32549)
+scale = Vector2(0.492188, 0.115)
+texture_normal = ExtResource("16_3sfxg")
+
+[node name="Label" type="Label" parent="UI/Result/ExitButton2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "リトライ(Spaceキー)"
+label_settings = ExtResource("21_tnr6x")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="Switch" type="Control" parent="UI" node_paths=PackedStringArray("button", "Rect")]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -199.0
+offset_top = 48.0
+offset_right = -99.0
+offset_bottom = 98.0
+grow_horizontal = 0
+script = ExtResource("17_5uein")
+button = NodePath("TouchButton")
+Rect = NodePath("Button")
+sprite_on = ExtResource("18_dbveo")
+sprite_off = ExtResource("21_fyxre")
+
+[node name="TouchButton" type="TouchScreenButton" parent="UI/Switch"]
+self_modulate = Color(0.439216, 0.439216, 0.439216, 0.368627)
+position = Vector2(-40, -20)
+scale = Vector2(0.414063, 0.21875)
+texture_normal = ExtResource("16_3sfxg")
+
+[node name="Handicon" type="TextureRect" parent="UI/Switch"]
+offset_left = -34.0
+offset_top = -7.0
+offset_right = 29.0
+offset_bottom = 87.0
+texture = ExtResource("20_w0pmg")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Button" type="TextureRect" parent="UI/Switch"]
+offset_left = 62.0
+offset_top = 40.0
+offset_right = 125.0
+offset_bottom = 97.0
+texture = ExtResource("18_dbveo")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="UI/Switch"]
+layout_mode = 0
+offset_left = 27.0
+offset_top = -17.0
+offset_right = 170.0
+offset_bottom = 57.0
+text = "タッチ
+コントローラー"
+label_settings = ExtResource("21_tnr6x")
+vertical_alignment = 1
+
+[node name="VPad" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 634.0
+offset_top = 376.0
+offset_right = 674.0
+offset_bottom = 416.0
+
+[node name="Shot" type="TouchScreenButton" parent="UI/VPad"]
+self_modulate = Color(1, 1, 1, 0.490196)
+position = Vector2(393, 152)
+texture_normal = ExtResource("17_e8uq2")
+
+[node name="TextureRect" type="TextureRect" parent="UI/VPad/Shot"]
+self_modulate = Color(1, 1, 1, 0.67451)
+offset_left = -12.0
+offset_top = -11.0
+offset_right = 115.0
+offset_bottom = 115.0
+texture = ExtResource("24_gbj01")
+expand_mode = 1
+stretch_mode = 5
+flip_h = true
+
+[node name="Joystick" type="Control" parent="UI/VPad"]
+modulate = Color(1, 1, 1, 0.384314)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -501.0
+offset_top = 60.0
+offset_right = -301.0
+offset_bottom = 260.0
+grow_vertical = 0
+pivot_offset = Vector2(100, 100)
+script = ExtResource("17_a3ck8")
+pressed_color = Color(0.482353, 0.482353, 0.482353, 1)
+
+[node name="Base" type="TextureRect" parent="UI/VPad/Joystick"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("18_218n3")
+metadata/_edit_lock_ = true
+
+[node name="Tip" type="TextureRect" parent="UI/VPad/Joystick/Base"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(50, 50)
+texture = ExtResource("19_dvhcm")
+metadata/_edit_lock_ = true
+
+[node name="ExitButton" type="Control" parent="UI"]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 39.0
+offset_top = 30.0
+offset_right = 236.0
+offset_bottom = 90.0
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="UI/ExitButton"]
+self_modulate = Color(0.462745, 0.462745, 0.462745, 0.32549)
+scale = Vector2(0.382813, 0.115)
+texture_normal = ExtResource("16_3sfxg")
+
+[node name="Label" type="Label" parent="UI/ExitButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "タイトル(Qキー)"
+label_settings = ExtResource("21_tnr6x")
+horizontal_alignment = 1
+vertical_alignment = 1

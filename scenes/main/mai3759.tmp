@@ -1,0 +1,98 @@
+[gd_scene load_steps=10 format=3 uid="uid://dsg4x6m7y7ofp"]
+
+[ext_resource type="Script" path="res://scenes/main/Main.gd" id="1_nb6b1"]
+[ext_resource type="Script" path="res://scenes/main/Player.gd" id="2_kkcg0"]
+[ext_resource type="Texture2D" uid="uid://ju7wj6v5i78j" path="res://contents/Texture/vi.png" id="3_a0q2j"]
+[ext_resource type="AudioStream" uid="uid://dfdt3l5obcwj7" path="res://contents/Audio/Fire.wav" id="4_mhd2n"]
+[ext_resource type="AudioStream" uid="uid://48n3kcv3d2yb" path="res://contents/Audio/BGM.wav" id="5_403oa"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_finqf"]
+
+[sub_resource type="Animation" id="Animation_rp06e"]
+resource_name = "fire"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [3, 4, 5]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"return_to_idle"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_0kb6m"]
+resource_name = "idle"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8, 1.2, 1.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 1, 0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ml6s2"]
+_data = {
+"fire": SubResource("Animation_rp06e"),
+"idle": SubResource("Animation_0kb6m")
+}
+
+[node name="Root" type="Node2D"]
+script = ExtResource("1_nb6b1")
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(228, 296)
+script = ExtResource("2_kkcg0")
+_speed = 20000
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("RectangleShape2D_finqf")
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+scale = Vector2(-1, 1)
+texture = ExtResource("3_a0q2j")
+hframes = 9
+vframes = 6
+frame = 3
+metadata/_edit_lock_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
+movie_quit_on_finish = true
+libraries = {
+"": SubResource("AnimationLibrary_ml6s2")
+}
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Player"]
+stream = ExtResource("4_mhd2n")
+max_polyphony = 10
+
+[node name="Audio" type="Node" parent="."]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("5_403oa")
+autoplay = true

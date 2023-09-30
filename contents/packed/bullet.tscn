@@ -1,0 +1,51 @@
+[gd_scene load_steps=6 format=3 uid="uid://vykujaoorek4"]
+
+[ext_resource type="Script" path="res://contents/packed/bullet.gd" id="1_0prsx"]
+[ext_resource type="Texture2D" uid="uid://cn01mtqwropsa" path="res://contents/image/bat.png" id="2_8uh7n"]
+
+[sub_resource type="Animation" id="Animation_vt1gx"]
+resource_name = "idle"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [1, 2, 3, 4, 5, 2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xx4hj"]
+_data = {
+"idle": SubResource("Animation_vt1gx")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fuwdv"]
+
+[node name="Bullet_Root" type="Node2D"]
+z_index = 2
+scale = Vector2(5, 5)
+script = ExtResource("1_0prsx")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_8uh7n")
+flip_h = true
+hframes = 9
+vframes = 6
+frame = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_xx4hj")
+}
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_fuwdv")

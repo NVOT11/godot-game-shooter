@@ -1,0 +1,7 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://l8po750d3bcr"]
+
+[ext_resource type="FontFile" uid="uid://l10iq6rwqpbd" path="res://contents/font/LINESeedJP_A_OTF_Rg.otf" id="1_j4m05"]
+
+[resource]
+font = ExtResource("1_j4m05")
+font_size = 100

@@ -1,0 +1,76 @@
+[gd_scene load_steps=5 format=3 uid="uid://qk3ulk3ivdca"]
+
+[ext_resource type="Texture2D" uid="uid://tdmoc4rwudp6" path="res://contents/image/circle512.png" id="1_quil0"]
+[ext_resource type="Script" path="res://contents/joystick/virtual_joystick.gd" id="2_fis0a"]
+[ext_resource type="Texture2D" uid="uid://bm30au8mjfc2f" path="res://contents/joystick/textures/joystick_base_outline.png" id="3_w60iy"]
+[ext_resource type="Texture2D" uid="uid://dt13r06u87fib" path="res://contents/joystick/textures/joystick_tip_arrows.png" id="4_tqg5e"]
+
+[node name="VPad" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Button" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 347.0
+offset_top = 100.0
+offset_right = 447.0
+offset_bottom = 200.0
+grow_horizontal = 0
+grow_vertical = 0
+pivot_offset = Vector2(50, 50)
+texture_normal = ExtResource("1_quil0")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Joystick" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -574.0
+offset_top = 58.0
+offset_right = -374.0
+offset_bottom = 258.0
+grow_vertical = 0
+pivot_offset = Vector2(100, 100)
+script = ExtResource("2_fis0a")
+
+[node name="Base" type="TextureRect" parent="Joystick"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_w60iy")
+metadata/_edit_lock_ = true
+
+[node name="Tip" type="TextureRect" parent="Joystick/Base"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(50, 50)
+texture = ExtResource("4_tqg5e")
+metadata/_edit_lock_ = true
